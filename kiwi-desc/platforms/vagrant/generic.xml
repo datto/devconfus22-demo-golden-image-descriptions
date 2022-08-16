@@ -1,0 +1,31 @@
+<image>
+	<profiles>
+		<profile name="Vagrant-libvirt" description="Libvirt image for Vagrant"/>
+		<profile name="Vagrant-vbox" description="VirtualBox image for Vagrant"/>
+	</profiles>
+	<users profiles="Vagrant-libvirt,Vagrant-vbox">
+		<!-- Standard password for the vagrant user, used by all images -->
+		<user name="vagrant" groups="vagrant" password="vagrant" home="/home/vagrant" pwdformat="plain" />
+		<user password="$1$wYJUgpM5$RXMMeASDc035eX.NbYWFl0" home="/root" name="root" groups="root"/>
+	</users>
+	<preferences profiles="Vagrant-libvirt">
+		<type image="oem" filesystem="xfs" format="vagrant">
+			<bootloader name="grub2" timeout="0"/>
+			<vagrantconfig provider="libvirt" virtualsize="42"/>
+			<size unit="G">42</size>
+			<oemconfig>
+				<oem-resize>false</oem-resize>
+			</oemconfig>
+		</type>
+	</preferences>
+	<preferences profiles="Vagrant-vbox">
+		<type image="oem" filesystem="xfs" format="vagrant">
+			<bootloader name="grub2" timeout="0"/>
+			<vagrantconfig provider="virtualbox" virtualsize="42"/>
+			<size unit="G">42</size>
+			<oemconfig>
+				<oem-resize>false</oem-resize>
+			</oemconfig>
+		</type>
+	</preferences>
+</image>

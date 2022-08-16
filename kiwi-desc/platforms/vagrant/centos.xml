@@ -1,0 +1,13 @@
+<image>
+	<!-- Hypervisor-specific packages -->
+	<packages type="image" profiles="Vagrant-libvirt,Vagrant-vbox">
+		<package name="gdisk"/>
+	</packages>
+	<packages type="image" profiles="Vagrant-libvirt">
+		<package name="qemu-guest-agent"/>
+	</packages>
+	<packages type="image" profiles="Vagrant-vbox">
+		<!-- VirtualBox is x86_64 only -->
+		<package name="virtualbox-guest-additions" arch="x86_64"/>
+	</packages>
+</image>

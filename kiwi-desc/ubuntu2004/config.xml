@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<image schemaversion="7.4" name="Ubuntu-2004-Appliance">
+	<description type="system">
+		<author>Neal Gompa</author>
+		<contact>ngompa@datto.com</contact>
+		<specification>Ubuntu 20.04 Appliance</specification>
+	</description>
+	<preferences>
+		<version>0.0.0</version>
+		<packagemanager>apt</packagemanager>
+		<locale>en_US</locale>
+		<keytable>us</keytable>
+		<timezone>UTC</timezone>
+	</preferences>
+	<repository type="apt-deb" alias="ubuntu-security" distribution="focal-security" components="main restricted universe multiverse" imageinclude="true">
+		<source path="http://archive.ubuntu.com/ubuntu">
+			<signing key="file:///usr/share/keyrings/ubuntu-archive-keyring.gpg"/>
+		</source>
+	</repository>
+	<repository type="apt-deb" alias="ubuntu-updates" distribution="focal-updates" components="main restricted universe multiverse" imageinclude="true">
+		<source path="http://archive.ubuntu.com/ubuntu">
+			<signing key="file:///usr/share/keyrings/ubuntu-archive-keyring.gpg"/>
+		</source>
+	</repository>
+	<repository type="apt-deb" alias="ubuntu" distribution="focal" components="main restricted universe multiverse" imageinclude="true" use_for_bootstrap="true">
+		<source path="http://archive.ubuntu.com/ubuntu">
+			<signing key="file:///usr/share/keyrings/ubuntu-archive-keyring.gpg"/>
+		</source>
+	</repository>
+	<include from="this://./platforms/cloud/generic-base.xml"/>
+	<include from="this://./platforms/cloud/generic-ext4.xml"/>
+	<include from="this://./platforms/cloud/ubuntu.xml"/>
+	<include from="this://./platforms/vagrant/generic.xml"/>
+	<include from="this://./platforms/vagrant/ubuntu.xml"/>
+	<packages type="image">
+		<package name="adduser"/>
+		<package name="apt"/>
+		<package name="apt-transport-https"/> <!-- try to have https repos work -->
+		<package name="apt-utils"/>
+		<package name="bzip2"/>
+		<package name="ca-certificates"/>
+		<package name="chrony"/>
+		<package name="console-setup"/>
+		<package name="curl"/>
+		<package name="debconf"/>
+		<package name="debconf-i18n"/>
+		<package name="e2fsprogs"/>
+		<package name="eject"/>
+		<package name="grub-efi-arm64-signed" arch="aarch64"/>
+		<package name="grub-efi-amd64-signed" arch="x86_64"/>
+		<package name="grub-pc-bin" arch="x86_64"/>
+		<package name="init"/>
+		<package name="iproute2"/>
+		<package name="iputils-ping"/>
+		<package name="isc-dhcp-client"/>
+		<package name="jq"/>
+		<package name="kbd"/>
+		<package name="kmod"/>
+		<package name="less"/>
+		<package name="locales"/>
+		<package name="lsb-release"/>
+		<package name="mawk"/>
+		<package name="mount"/>
+		<package name="nano"/>
+		<package name="netbase"/>
+		<package name="netcat-openbsd"/>
+		<package name="network-manager"/>
+		<package name="passwd"/>
+		<package name="procps"/>
+		<package name="python3"/>
+		<package name="rsync"/>
+		<package name="sensible-utils"/>
+		<package name="shim-signed" arch="aarch64"/>
+		<package name="shim-signed" arch="x86_64"/>
+		<package name="sudo"/>
+		<package name="tzdata"/>
+		<package name="ubuntu-keyring"/>
+		<package name="unattended-upgrades"/>
+		<package name="udev"/>
+		<package name="vim-tiny"/>
+		<package name="whiptail"/>
+		<package name="xfsprogs"/>
+		<package name="xz-utils"/>
+		<package name="zstd"/>
+		<package name="dracut"/>
+		<package name="binutils"/>
+		<package name="linux-image-generic"/>
+		<package name="openssh-client"/>
+		<package name="openssh-server"/>
+		<package name="wget"/>
+		<package name="tar"/>
+	</packages>
+	<packages type="bootstrap">
+		<package name="apt-transport-https"/> <!-- try to have https repos work -->
+		<package name="ca-certificates"/>
+		<package name="gnupg"/>
+		<package name="usrmerge"/>      <!-- ensure correct FHS paths -->
+	</packages>
+</image>

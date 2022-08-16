@@ -1,0 +1,18 @@
+<image>
+	<packages type="image" profiles="Azure">
+		<package name="cloud-init"/>
+		<package name="cloud-utils-growpart"/>
+		<package name="gdisk"/>
+	</packages>
+	<packages type="image" profiles="AWSEC2">
+		<package name="cloud-init"/>
+		<package name="cloud-utils-growpart"/>
+		<package name="gdisk"/>
+	</packages>
+	<packages type="image" profiles="OpenStack">
+		<package name="cloud-init"/>
+		<package name="cloud-utils-growpart"/>
+		<package name="gdisk"/>
+		<package name="qemu-guest-agent"/>
+	</packages>
+</image>

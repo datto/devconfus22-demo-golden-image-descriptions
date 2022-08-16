@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<image schemaversion="7.4" name="CentOS-9-Appliance">
+	<description type="system">
+		<author>Neal Gompa</author>
+		<contact>ngompa@datto.com</contact>
+		<specification>CentOS 9 Appliance</specification>
+	</description>
+	<preferences>
+		<version>0.0.0</version>
+		<packagemanager>dnf</packagemanager>
+		<locale>en_US</locale>
+		<keytable>us</keytable>
+		<timezone>UTC</timezone>
+		<rpm-check-signatures>true</rpm-check-signatures>
+	</preferences>
+	<repository type="rpm-md" alias="epel-next" sourcetype="metalink">
+		<source path="https://mirrors.fedoraproject.org/metalink?repo=epel-next-9&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-9"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="epel" sourcetype="metalink">
+		<source path="https://mirrors.fedoraproject.org/metalink?repo=epel-9&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-9"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="centos-kmods" sourcetype="metalink">
+		<source path="https://mirrors.centos.org/metalink?repo=centos-kmods-sig-packages-main-9-stream&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-Kmods"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="extras-common" sourcetype="metalink">
+		<source path="https://mirrors.centos.org/metalink?repo=centos-extras-sig-extras-common-9-stream&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-Extras"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="crb" sourcetype="metalink">
+		<source path="https://mirrors.centos.org/metalink?repo=centos-crb-9-stream&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-Official"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="appstream" sourcetype="metalink">
+		<source path="https://mirrors.centos.org/metalink?repo=centos-appstream-9-stream&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-Official"/>
+		</source>
+	</repository>
+	<repository type="rpm-md" alias="baseos" sourcetype="metalink">
+		<source path="https://mirrors.centos.org/metalink?repo=centos-baseos-9-stream&amp;arch=$basearch">
+			<signing key="file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-Official"/>
+		</source>
+	</repository>
+	<include from="this://./platforms/cloud/generic-base.xml"/>
+	<include from="this://./platforms/cloud/generic-xfs.xml"/>
+	<include from="this://./platforms/cloud/centos.xml"/>
+	<include from="this://./platforms/vagrant/generic.xml"/>
+	<include from="this://./platforms/vagrant/centos.xml"/>
+	<packages type="image">
+		<package name="audit"/>
+		<package name="basesystem"/>
+		<package name="bash"/>
+		<package name="btrfs-progs"/>
+		<package name="ca-certificates"/>
+		<package name="centos-release-kmods"/>
+		<package name="centos-stream-release"/>
+		<package name="chrony"/>
+		<package name="coreutils"/>
+		<package name="crypto-policies"/>
+		<package name="crypto-policies-scripts"/>
+		<package name="curl"/>
+		<package name="dnf-automatic"/>
+		<package name="e2fsprogs"/>
+		<package name="epel-release"/>
+		<package name="epel-next-release"/>
+		<package name="filesystem"/>
+		<package name="glibc"/>
+		<package name="glibc-langpack-en"/>
+		<package name="grubby"/>
+		<package name="grub2-efi-aa64" arch="aarch64"/>
+		<package name="grub2-efi-aa64-modules" arch="aarch64"/>
+		<package name="grub2-efi-x64" arch="x86_64"/>
+		<package name="grub2-efi-x64-modules" arch="x86_64"/>
+		<package name="grub2-pc" arch="x86_64"/>
+		<package name="grub2-pc-modules" arch="x86_64"/>
+		<package name="hostname"/>
+		<package name="iproute"/>
+		<package name="iproute-tc"/>
+		<package name="iputils"/>
+		<package name="irqbalance"/>
+		<package name="jq"/>
+		<package name="kbd"/>
+		<package name="kexec-tools"/>
+		<package name="less"/>
+		<package name="man-db"/>
+		<package name="nano"/>
+		<package name="ncurses"/>
+		<package name="openssh-clients"/>
+		<package name="openssh-server"/>
+		<package name="p11-kit"/>
+		<package name="parted"/>
+		<package name="passwd"/>
+		<package name="policycoreutils"/>
+		<package name="procps-ng"/>
+		<package name="rootfiles"/>
+		<package name="rpm"/>
+		<package name="rpm-plugin-audit"/>
+		<package name="rpm-plugin-selinux"/>
+		<package name="rsync"/>
+		<package name="selinux-policy-targeted"/>
+		<package name="setup"/>
+		<package name="shadow-utils"/>
+		<package name="shim-signed-aa64" arch="aarch64"/>
+		<package name="shim-signed-x64" arch="x86_64"/>
+		<package name="sssd-common"/>
+		<package name="sssd-kcm"/>
+		<package name="sudo"/>
+		<package name="systemd"/>
+		<package name="systemd-resolved"/>
+		<package name="util-linux"/>
+		<package name="vim-minimal"/>
+		<package name="xfsprogs"/>
+		<package name="yum"/>
+		<package name="NetworkManager"/>
+		<package name="authselect"/>
+		<package name="yum-utils"/>
+		<package name="kernel-core"/>
+		<package name="kernel-tools"/>
+		<package name="libsysfs"/>
+		<package name="lshw"/>
+		<package name="lsscsi"/>
+		<package name="microcode_ctl"/>
+		<package name="prefixdevname"/>
+		<package name="wget"/>
+		<package name="tar"/>
+		<package name="gzip"/>
+		<package name="bzip2"/>
+		<package name="xz"/>
+		<package name="zstd"/>
+	</packages>
+	<packages type="bootstrap">
+		<package name="basesystem"/>
+		<package name="filesystem"/>
+	</packages>
+</image>

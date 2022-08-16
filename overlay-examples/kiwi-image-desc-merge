@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Simple wrapper to merge kiwi descriptions to prepare for merge
+# Author: Neal Gompa <ngompa@datto.com>
+# Fedora-License-Identifier: ASL 2.0
+# SPDX-License-Identifier: Apache-2.0
+
+set -eu -o pipefail
+
+kiwidescmergesh="$(basename "$0")"
+
+usage() {
+	echo >&2 "usage: $kiwidescmergesh --output-dir=DIR --image-name=NAME --image-desc-name=NAME [--debug]"
+	echo >&2 "   eg: $kiwidescmergesh --output-dir=/var/tmp/work --image-name=ovaexample --image-desc-name=descexample --debug"
+	echo >&2 "   eg: $kiwidescmergesh --output-dir=/var/tmp/work --image-name=ovaexample --image-desc-name=descexample"
+	exit 255
+}
+
+optTemp=$(getopt --options '+o:,n:,i:,d,f,h' --longoptions 'output-dir:,image-name:,image-desc-name:,debug,force,help' --name "$kiwidescmergesh" -- "$@")
+eval set -- "$optTemp"
+unset optTemp
+
+output_dir=
+image_desc_name=
+debug=
+force=
+
+while true; do
+	case "$1" in
+		-o|--output-dir) output_dir="$2" ; shift 2 ;;
+		-n|--image-name) image_name="$2" ; shift 2 ;;
+		-i|--image-desc-name) image_desc_name="$2" ; shift 2 ;;
+		-d|--debug) debug="--debug" ; shift ;;
+		-f|--force) force="yes" ; shift ;;
+		-h|--help) usage ;;
+		--) shift ; break ;;
+	esac
+done
+
+if [ -z "$output_dir" ] || [ -z "$image_name" ] || [ -z "$image_desc_name" ]; then
+	echo "Options not set!"
+	usage
+fi
+
+if [ -n "$debug" ]; then
+	set -x
+fi
+
+if [ -n "$force" ]; then
+	# Reset output dir if it exists
+	rm -rf "${output_dir}"
+fi
+
+mkdir -p "${output_dir}"
+cp -a ../kiwi-desc "${output_dir}"
+cp -a "${image_desc_name}/kiwi-desc" "${output_dir}"
+xmlmerge --compact "${output_dir}/kiwi-desc/${image_name}/config.xml" "${output_dir}/kiwi-desc/${image_name}/config-${image_desc_name}.xml" -o "${output_dir}/kiwi-desc/${image_name}/config.xml"
+# Fixup xmlmerge un-escaping ampersands
+sed -e "s|&|&amp;|g" -i "${output_dir}/kiwi-desc/${image_name}/config.xml"
+cp -a ../kiwi-build "${output_dir}"
+
+echo "Now run the 'kiwi-build' script in ${output_dir} to build the desired image!"

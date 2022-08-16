@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Simple wrapper to call kiwi properly for image builds
+# Author: Neal Gompa <ngompa@datto.com>
+# Fedora-License-Identifier: ASL 2.0
+# SPDX-License-Identifier: Apache-2.0
+
+
+
+set -eu -o pipefail
+
+kiwibuildsh="$(basename "$0")"
+
+usage() {
+	echo >&2 "usage: $kiwibuildsh --output-dir=DIR --image-name=NAME --image-type=TYPE --image-profile=PROFILE [--debug]"
+	echo >&2 "   eg: $kiwibuildsh --output-dir=/var/tmp/work --image-name=ovaexample --image-type=oem --image-profile=cloud --debug"
+	echo >&2 "   eg: $kiwibuildsh --output-dir=/var/tmp/work --image-name=ovaexample --image-type=oem --image-profile=cloud"
+	exit 255
+}
+
+optTemp=$(getopt --options '+o:,n:,t:,p:,d,f,h' --longoptions 'output-dir:,image-name:,image-type:,image-profile:,debug,force,help' --name "$kiwibuildsh" -- "$@")
+eval set -- "$optTemp"
+unset optTemp
+
+output_dir=
+image_name=
+image_type=
+image_profile=
+debug=
+force=
+
+while true; do
+	case "$1" in
+		-o|--output-dir) output_dir="$2" ; shift 2 ;;
+		-n|--image-name) image_name="$2" ; shift 2 ;;
+		-t|--image-type) image_type="$2" ; shift 2 ;;
+		-p|--image-profile) image_profile="$2" ; shift 2 ;;
+		-d|--debug) debug="--debug" ; shift ;;
+		-f|--force) force="yes" ; shift ;;
+		-h|--help) usage ;;
+		--) shift ; break ;;
+	esac
+done
+
+if [ -z "$output_dir" ] || [ -z "$image_name" ] || [ -z "$image_type" ] || [ -z "$image_profile" ]; then
+	echo "Options not set!"
+	usage
+fi
+
+if [ ! -e "${HOME}/.gnupg/S.gpg-agent" ] && [ ! -e "/run/user/${EUID}/gnupg/S.gpg-agent" ] && [ ! -e "/run/user/${UID}/gnupg/S.gpg-agent" ]; then
+	# Activate GPG agent since Debian/Ubuntu builds need it
+	gpg-agent --daemon
+fi
+
+if [ -e "/sys/fs/selinux/enforce" ]; then
+	# Disable SELinux enforcement during the image build if it's enforcing
+	selinux_enforcing="$(cat /sys/fs/selinux/enforce)"
+	if [ "$selinux_enforcing" = "1" ]; then
+		setenforce 0
+	fi
+fi
+
+if [ -n "$force" ]; then
+	# Reset output dir if it exists
+	rm -rf "${output_dir}"
+fi
+
+pushd kiwi-desc
+	set +e
+	kiwi-ng ${debug} --type="${image_type}" --profile="${image_profile}" --color-output system build --description "./${image_name}" --target-dir "${output_dir}"
+	kiwi_status=$?
+	set -e
+popd
+
+if [ -e "/sys/fs/selinux/enforce" ]; then
+	# Re-enable SELinux enforcement now that image build is done
+	if [ "$selinux_enforcing" = "1" ]; then
+		setenforce 1
+	fi
+fi
+
+exit $kiwi_status

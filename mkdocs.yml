@@ -1,0 +1,35 @@
+site_name: "Demo Base Images for DevConf.US 22"
+site_url: "https://datto.github.io/devconfus22-demo-golden-image-descriptions"
+
+repo_url: "https://github.com/datto/devconfus22-demo-golden-image-descriptions"
+repo_name: "datto/devconfus22-demo-golden-image-descriptions"
+edit_uri: ""
+docs_dir: "doc"
+site_dir: "public"
+
+nav:
+  - Overview: "index.md"
+  - Architecture:
+    - Project Layout: "Architecture/ProjectLayout.md"
+  - Features:
+    - Distribution Support: "Features/DistributionSupport.md"
+    - Platform Support: "Features/PlatformSupport.md"
+    - System Services: "Features/SystemServices.md"
+  - Process:
+    - Building the image: "Process/Building.md"
+
+theme:
+  name: "material"
+  locale: "en"
+  highlightjs: true
+  features:
+    - navigation.expand
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - toc.integrate
+
+markdown_extensions:
+  - toc:
+      baselevel: 4
+      permalink: true

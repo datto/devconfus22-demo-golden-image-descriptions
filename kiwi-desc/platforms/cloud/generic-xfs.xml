@@ -1,0 +1,29 @@
+<image>
+	<preferences profiles="Azure">
+		<type image="oem" filesystem="xfs" kernelcmdline="USE_BY_UUID_DEVICE_NAMES=1 earlyprintk=ttyS0 console=ttyS0 rootdelay=300 net.ifnames=0 dis_ucode_ldr scsi_mod.use_blk_mq=1 multipath=off" devicepersistency="by-uuid" formatoptions="force_size" format="vhd-fixed" bootpartition="true" bootpartsize="1024" efipartsize="512" firmware="uefi">
+			<bootloader name="grub2" console="serial" timeout="1" timeout_style="countdown"/>
+			<size unit="G">5</size>
+			<oemconfig>
+				<oem-resize>false</oem-resize>
+			</oemconfig>
+		</type>
+	</preferences>
+	<preferences profiles="AWSEC2">
+		<type image="oem" filesystem="xfs" bootpartition="false" kernelcmdline="console=ttyS0 net.ifnames=0 nvme_core.io_timeout=4294967295 nvme_core.admin_timeout=4294967295 8250.nr_uarts=4 dis_ucode_ldr multipath=off" devicepersistency="by-label" firmware="uefi">
+			<bootloader name="grub2" timeout="1"/>
+			<size unit="G">5</size>
+			<oemconfig>
+				<oem-resize>false</oem-resize>
+			</oemconfig>
+		</type>
+	</preferences>
+	<preferences profiles="OpenStack">
+		<type image="oem" filesystem="xfs" bootpartition="false" kernelcmdline="console=ttyS0 net.ifnames=0 dis_ucode_ldr" devicepersistency="by-label" firmware="uefi" format="qcow2">
+			<bootloader name="grub2" console="serial" timeout="1"/>
+			<size unit="G">5</size>
+			<oemconfig>
+				<oem-resize>false</oem-resize>
+			</oemconfig>
+		</type>
+	</preferences>
+</image>

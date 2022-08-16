@@ -1,0 +1,21 @@
+<image>
+	<users>
+		<!-- Standard password for the cockpituous user for basic cockpit access -->
+		<user name="cockpituous" groups="cockpituous,wheel" password="cockpituous" home="/home/cockpituous" pwdformat="plain" />
+	</users>
+	<packages type="image">
+		<package name="podman"/>
+		<package name="openssh-server"/>
+		<package name="PackageKit"/>
+		<package name="cockpit"/>
+		<package name="cockpit-bridge"/>
+		<package name="cockpit-doc"/>
+		<package name="cockpit-ws"/>
+		<package name="cockpit-networkmanager"/>
+		<package name="cockpit-packagekit"/>
+		<package name="cockpit-pcp"/>
+		<package name="cockpit-podman"/>
+		<package name="cockpit-storaged"/>
+		<package name="cockpit-system"/>
+	</packages>
+</image>

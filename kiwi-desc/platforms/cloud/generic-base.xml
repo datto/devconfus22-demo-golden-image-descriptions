@@ -1,0 +1,11 @@
+<image>
+	<profiles>
+		<profile name="Azure" description="Azure Guest Image"/>
+		<profile name="AWSEC2" description="AWS EC2 HVM Guest Image"/>
+		<profile name="OpenStack" description="OpenStack Guest Image"/>
+	</profiles>
+	<users profiles="Azure,AWSEC2,OpenStack">
+		<!-- The password here does not matter, it will be erased in config.sh -->
+		<user name="root" groups="root" password="linux" home="/root" pwdformat="plain" />
+	</users>
+</image>
